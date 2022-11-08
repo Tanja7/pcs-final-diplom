@@ -4,7 +4,8 @@ import com.google.gson.GsonBuilder;
 public class PageEntry implements Comparable<PageEntry> {
     private final String pdfName;
     private final int page;
-    private final int count;
+
+    private int count;
 
     public PageEntry(String pdfName, int page, int count) {
         this.pdfName = pdfName;
@@ -26,5 +27,21 @@ public class PageEntry implements Comparable<PageEntry> {
         var string = gson.toJson(this);
         return string;
 
+    }
+
+    public String getPdfName() {
+        return pdfName;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

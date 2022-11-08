@@ -9,7 +9,7 @@ import java.util.*;
 public class BooleanSearchEngine implements SearchEngine {
 
     HashMap<String, List<PageEntry>> wordIndexing = new HashMap<>(); // ключ - слово, значение объект (искомый список)
-
+    // StopWords stopWords = new StopWords();
     public BooleanSearchEngine(File pdfsDir) throws IOException {
         // прочтите тут все pdf и сохраните нужные данные,
         // тк во время поиска сервер не должен уже читать файлы
@@ -44,7 +44,6 @@ public class BooleanSearchEngine implements SearchEngine {
         }
     }
 
-
     @Override
     public List<PageEntry> search(String word) {
         // тут реализуйте поиск по слову
@@ -56,7 +55,6 @@ public class BooleanSearchEngine implements SearchEngine {
         }
     }
 
-
     private void addWord(String word, String pdfName, int pageNumber, int count) {
         if (wordIndexing.containsKey(word)) {
             var pages = wordIndexing.get(word);
@@ -65,5 +63,30 @@ public class BooleanSearchEngine implements SearchEngine {
             wordIndexing.put(word, new ArrayList<>());
             wordIndexing.get(word).add(new PageEntry(pdfName, pageNumber, count));
         }
+    }
+    public List<PageEntry> totalNumber(List<PageEntry> resultWord, List<PageEntry>result) {
+        // Пройти по всем найденным страницам
+        for (var pe : resultWord) {
+
+            // Для каждой найденной страницы Пройти по страницам в результирующем списке.
+            // Если там есть такая страница, то добавить количество совпадений искомого слова.
+            int addedCount = pe.getCount();
+            // Запомним в эту переменную страницу из результирующего списка, если она там есть.
+            PageEntry addedPageEntry = null;
+            // Ищем страницу в результирующем списке
+            for (var pe1 : result) {
+                // Ищем по названию файла и номеру странице
+                if(pe.getPdfName().compareTo(pe1.getPdfName()) == 0 && pe.getPage() == pe1.getPage()) {
+                    // Если нашли, то прибавлем количество совпадений.
+                    pe1.setCount(pe1.getCount() + addedCount);
+                    addedPageEntry = pe1;// Запоминаем страницу
+                    break;// выходим из цикла
+                }
+            }
+            // Если страница не найдена (еще не добавлена в результат), то добавим
+            if(addedPageEntry == null)
+                result.add(pe);
+        }
+        return result;
     }
 }
