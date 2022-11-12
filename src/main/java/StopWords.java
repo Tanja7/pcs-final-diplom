@@ -7,16 +7,17 @@ import java.util.*;
 public class StopWords {
     Set<String> ignoredWords = new HashSet<>();
 
-    public StopWords (File textFile){
+    public StopWords(File textFile) {
         String wordsIgn;
         try (BufferedReader reader = new BufferedReader(new FileReader(textFile))) {
-            while((wordsIgn = reader.readLine()) != null)
+            while ((wordsIgn = reader.readLine()) != null)
                 ignoredWords.add(wordsIgn);
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
+
     public boolean contains(String word) {
         return ignoredWords.contains(word);
     }

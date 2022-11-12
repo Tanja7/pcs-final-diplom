@@ -17,8 +17,8 @@ public class Client {
             out.println(scanner.nextLine());
             String s1 = in.readLine();
             while (s1 != null) {
-           System.out.println(s1);
-            s1 = in.readLine();
+                System.out.println(s1);
+                s1 = in.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
