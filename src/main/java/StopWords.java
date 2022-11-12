@@ -7,7 +7,7 @@ import java.util.*;
 public class StopWords {
     Set<String> ignoredWords = new HashSet<>();
 
-    public StopWords (File textFile) throws IOException{
+    public StopWords (File textFile){
         String wordsIgn;
         try (BufferedReader reader = new BufferedReader(new FileReader(textFile))) {
             while((wordsIgn = reader.readLine()) != null)
